@@ -1,0 +1,4 @@
+version: 1.0.0
+title: 聊天服务端
+description: |
+  基于 RN 以及 socket.io 实现

@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>web-socket</title>
+
+        <script src="./socket.io.js"></script>
+        <script>
+            var socket = io('http://127.0.0.1:7077');
+
+            socket.on('connect', () =>{
+                this.socket.emit('registry', {
+                    userId: 'webTuzki',
+                    avatar: 'https://s-media-cache-ak0.pinimg.com/236x/25/a1/71/25a171d9d10fb45329db5cce3613d1b3.jpg',
+                    socketId: socket.id
+                });
+            });
+
+            socket.on('message', (message) => {
+                console.log(message);
+            });
+
+            function sendMessage(txt) {
+                this.socket.emit('peerMessage', {
+                    content: txt,
+                    to: 'rnTuzki',
+                    from: 'webTuzki'
+                });
+            }
+        </script>
+    </head>
+</html>
