@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cloverx": "file:///Users/plusman/Desktop/clover-x/cloverx",
+    "cloverx": "^1.0.21",
     "lodash": "^4.17.3",
     "socket.io": "^1.7.2",
     "uuid": "^3.0.1",
