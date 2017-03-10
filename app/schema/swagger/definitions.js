@@ -35,6 +35,10 @@ module.exports = {
                 type: 'number',
                 description: '系统分配的 userId'
             },
+            avatar: {
+                type: 'string',
+                description: '用户头像'
+            },
             name: {
                 type: 'string',
                 description: '用户名'

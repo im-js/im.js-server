@@ -22,6 +22,11 @@ module.exports = {
             autoIncrement: true,
             comment: '用户 ID'
         },
+        avatar: {
+            type: S.STRING(250),
+            allowNull: false,
+            comment: '头像地址'
+        },
         name: {
             type: S.STRING(32),
             allowNull: false,

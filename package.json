@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "DEBUG=cloverx:* node --harmony-async-await app/index.js"
+    "dev": "DEBUG=cloverx:* node app/index.js"
   },
   "repository": {
     "type": "git",

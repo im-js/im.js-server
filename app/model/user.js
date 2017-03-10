@@ -9,7 +9,18 @@
  */
 
 const cloverx = require('cloverx');
-const schemaUser = cloverx.mysql.get('chat/user');
+const schemaUser = cloverx.mysql.get('im/user');
+
+const RANDOM_AVATAR = [
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_01.jpg',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_02.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_03.jpg',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_04.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_05.jpeg',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_06.jpg',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_07.jpg',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_08.png'
+];
 
 /**
  * 用户注册
@@ -25,19 +36,23 @@ async function login (name, phone, socketId = '') {
         throw cloverx.Error.badParameter(`手机用户 ${phone} 已经在线`);
     }
 
+    // 随机头像
+    let avatar = RANDOM_AVATAR[Math.floor((Math.random() * RANDOM_AVATAR.length))];
+
     let result;
     if(user) {
         result = await user.update({
-            name: name,
-            socketId: socketId,
+            name,
+            socketId,
             status: 'online'
         });
     } else {
         result = await schemaUser
         .build({
-            name: name,
-            phone: phone,
-            socketId: socketId,
+            name,
+            phone,
+            avatar,
+            socketId,
             status: 'online'
         })
         .save();
