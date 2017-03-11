@@ -14,8 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cloverx": "^1.0.21",
+    "cloverx": "^1.0.24",
     "lodash": "^4.17.3",
+    "pinyin": "^2.8.0",
     "socket.io": "^1.7.2",
     "uuid": "^3.0.1",
     "yargs": "^6.5.0"

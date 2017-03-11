@@ -32,6 +32,11 @@ module.exports = {
             allowNull: false,
             comment: '用户名'
         },
+        firstLetter: {
+            type: S.STRING(1),
+            allowNull: false,
+            comment: '用户首字母'
+        },
         phone: {
             type: S.STRING(11),
             allowNull: false,

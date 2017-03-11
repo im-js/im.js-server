@@ -10,6 +10,7 @@
 
 const cloverx = require('cloverx');
 const schemaUser = cloverx.mysql.get('im/user');
+const pinyin = require('pinyin');
 
 const RANDOM_AVATAR = [
     'http://image-2.plusman.cn/app/im-client/avatar/tuzki_01.jpg',
@@ -38,12 +39,15 @@ async function login (name, phone, socketId = '') {
 
     // 随机头像
     let avatar = RANDOM_AVATAR[Math.floor((Math.random() * RANDOM_AVATAR.length))];
+    // 姓名首字母
+    let firstLetter = getNameFirstLetter(name);
 
     let result;
     if(user) {
         result = await user.update({
             name,
             socketId,
+            firstLetter,
             status: 'online'
         });
     } else {
@@ -53,12 +57,44 @@ async function login (name, phone, socketId = '') {
             phone,
             avatar,
             socketId,
+            firstLetter,
             status: 'online'
         })
         .save();
     }
 
     return result;
+}
+
+/**
+ * 修改用户属性
+ */
+async function modifyUserInfo (userId, field, value) {
+    if (!~['name'].indexOf(field)) {
+        throw cloverx.Error.badParameter(`字段 ${field} 不可更改`);
+    }
+
+    let user = await schemaUser
+        .findOne({
+            where: {
+                userId: userId
+            }
+        });
+
+    if(!user) {
+        throw cloverx.Error.badParameter(`用户ID ${userId} 不存在`);
+    }
+
+    if (field === 'name') {
+        return await user.update({
+            [field]: value,
+            firstLetter: getNameFirstLetter(value)
+        });
+    } else {
+        return await user.update({
+            [field]: value,
+        });
+    }
 }
 
 /**
@@ -90,19 +126,39 @@ async function list(status) {
     }
 
     let result = await schemaUser.findAll({
-        attributes: ['userId', 'name', 'phone', 'socketId', 'status'],
+        attributes: ['userId', 'avatar', 'name', 'phone', 'socketId', 'status', 'firstLetter'],
         where,
         order: [
+            ['firstLetter', 'asc'],
             ['updatedAt', 'desc']
         ],
         raw: true
     });
 
-    return result;
+    let sectionSort = {};
+    for(let i = 0; i< result.length; i++) {
+        let {firstLetter } = result[i];
+        if( !sectionSort[firstLetter] ) {
+            sectionSort[firstLetter] = [result[i]];
+        } else {
+            sectionSort[firstLetter].push(result[i]);
+        }
+    }
+
+    return sectionSort;
+}
+
+/**
+ * 获取用户首字母
+ */
+function getNameFirstLetter(name) {
+    let result = pinyin(name[0]);
+    return result[0][0][0];
 }
 
 module.exports = {
     login,
     logout,
-    list
+    list,
+    modifyUserInfo
 };

@@ -51,11 +51,48 @@ router.push({
 });
 
 /**jsdoc
+ * 更新用户属性
+ * @tags user
+ * @httpMethod put
+ * @path /:userId/property/:field
+ * @param {string#path} userId - 用户ID
+ * @param {string#path} field - 需要更新的属性
+ * @param {string#formData} value - 更新值
+ * @response @UserInfo
+ */
+router.push({
+    method: 'put',
+    path: '/:userId/property/:field',
+    params: {
+        userId: V.string().required(),
+        field: V.string().required()
+    },
+    body: {
+        value: V.string().required()
+    },
+    processors: [
+        async (ctx, next) => {
+            let result = await modelUser.modifyUserInfo(
+                    ctx.filter.params.userId,
+                    ctx.filter.params.field,
+                    ctx.filter.body.value
+            );
+            ctx.body = cloverx
+                .checker
+                .module('@UserInfo')
+                .checkAndFormat(result);
+
+            return next();
+        }
+    ]
+});
+
+/**jsdoc
  * 在线用户列表
  * @tags user
  * @httpMethod get
  * @path /online/list
- * @response [@UserInfo]
+ * @response {:[@UserInfo]}
  */
 router.push({
     method: 'get',
@@ -66,7 +103,7 @@ router.push({
 
             ctx.body = cloverx
                 .checker
-                .module('[@UserInfo]')
+                .module('{:[@UserInfo]}')
                 .checkAndFormat(result);
 
             return next();
