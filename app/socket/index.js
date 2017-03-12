@@ -12,24 +12,23 @@
 const cloverx = require('cloverx');
 const uuid = require('uuid');
 const io = require('socket.io')(cloverx.server);
-const userSocketIdMap = new Map();
-const socketIdUserMap = new Map();
+
+const modelUser = cloverx.model.get('user');
 
 io.on('connection', function (socket) {
     socket.on('peerMessage', function (data) {
-        let to = userSocketIdMap.get(data.to);
-        let from = userSocketIdMap.get(data.from);
-        socket
-            .to(to.socketId)
-            .emit('message', {
-                content: data.content,
-                avatar: from.avatar,
-                uuid: data.uuid || uuid.v4()
-            });
-    });
-
-    socket.on('registry', function (data) {
-        userSocketIdMap.set(data.userId, data);
-        socketIdUserMap.set(data.socketId, data);
+        sendPeerMessage(socket, data);
     });
 });
+
+// 私聊消息
+async function sendPeerMessage(socket, data) {
+    let user = await modelUser.getByUserId(data.to);
+    if (user.socketId) {
+        data.uuid = data.uuid || uuid.v4();
+
+        socket
+            .to(user.socketId)
+            .emit('message', data);
+    }
+}

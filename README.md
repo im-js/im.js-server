@@ -10,3 +10,20 @@ npm install
 ```shell
 npm run dev
 ```
+
+## 消息体格式约定
+**txt**  
+```javascript
+{
+    from: String('用户ID'),
+    to: String('用户ID'),
+    uuid: '消息唯一UUID',
+    msg: {
+        type: 'txt',
+        content: '文本内容',
+    },
+    ext: {
+        avatar: String('用户头像地址'),
+    }
+}
+```

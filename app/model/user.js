@@ -20,7 +20,18 @@ const RANDOM_AVATAR = [
     'http://image-2.plusman.cn/app/im-client/avatar/tuzki_05.jpeg',
     'http://image-2.plusman.cn/app/im-client/avatar/tuzki_06.jpg',
     'http://image-2.plusman.cn/app/im-client/avatar/tuzki_07.jpg',
-    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_08.png'
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_08.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_09.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_10.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_11.jpg',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_12.jpg',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_13.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_14.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_15.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_16.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_17.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_18.png',
+    'http://image-2.plusman.cn/app/im-client/avatar/tuzki_19.jpg'
 ];
 
 /**
@@ -70,7 +81,7 @@ async function login (name, phone, socketId = '') {
  * 修改用户属性
  */
 async function modifyUserInfo (userId, field, value) {
-    if (!~['name'].indexOf(field)) {
+    if (!~['name', 'socketId'].indexOf(field)) {
         throw cloverx.Error.badParameter(`字段 ${field} 不可更改`);
     }
 
@@ -117,6 +128,20 @@ async function logout(userId) {
 }
 
 /**
+ * 获取单个用户
+ */
+async function getByUserId(userId) {
+    let user = await schemaUser.findOne({
+        where: {
+            userId: userId
+        },
+        raw: true
+    });
+
+    return user;
+}
+
+/**
  * 拉取在线用户列表
  */
 async function list(status) {
@@ -159,6 +184,7 @@ function getNameFirstLetter(name) {
 module.exports = {
     login,
     logout,
+    getByUserId,
     list,
     modifyUserInfo
 };
