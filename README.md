@@ -1,8 +1,7 @@
-# ☘cloverx-starter
-只含基本目录结构，示例参考 [cloverx/examples](https://github.com/clover-x/cloverx/tree/master/example/app)
+# im-server
+>[im-client](https://github.com/plusmancn/im-client) 服务端代码
 
 ## Usage
-安装依赖，只能使用`npm`
 ```shell
 npm install
 ```
@@ -24,6 +23,9 @@ npm run dev
     },
     ext: {
         avatar: String('用户头像地址'),
+        name: String('用户姓名'),
+        displayTime: String('消息时间') = moment().startOf('minute').fromNow(),
+        timestamp: timestamp(毫秒)
     }
 }
 ```

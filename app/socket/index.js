@@ -11,6 +11,7 @@
 // 启动 socket.io
 const cloverx = require('cloverx');
 const uuid = require('uuid');
+const moment = require('moment');
 const io = require('socket.io')(cloverx.server);
 
 const modelUser = cloverx.model.get('user');
@@ -26,7 +27,8 @@ async function sendPeerMessage(socket, data) {
     let user = await modelUser.getByUserId(data.to);
     if (user.socketId) {
         data.uuid = data.uuid || uuid.v4();
-
+        data.ext.displayTime = moment().startOf('minute').fromNow();
+        data.ext.timestamp = +(new Date());
         socket
             .to(user.socketId)
             .emit('message', data);
