@@ -99,7 +99,7 @@ router.push({
     path: '/online/list',
     processors: [
         async (ctx, next) => {
-            let result = await modelUser.list('online');
+            let result = await modelUser.list();
 
             ctx.body = cloverx
                 .checker

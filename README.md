@@ -24,8 +24,11 @@ npm run dev
     ext: {
         avatar: String('用户头像地址'),
         name: String('用户姓名'),
-        displayTime: String('消息时间') = moment().startOf('minute').fromNow(),
-        timestamp: timestamp(毫秒)
+        timestamp: timestamp(毫秒), // 可使用 moment().startOf('minute').fromNow() 格式化
+    },
+    // 不参与网络传输，本地传递拓展字段位置
+    localeExt: {
+
     }
 }
 ```
