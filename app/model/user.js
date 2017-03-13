@@ -44,9 +44,9 @@ async function login (name, phone, socketId = '') {
         }
     });
 
-    if(user && user.status === 'online') {
-        throw cloverx.Error.badParameter(`手机用户 ${phone} 已经在线`);
-    }
+    // if(user && user.status === 'online') {
+        // throw cloverx.Error.badParameter(`手机用户 ${phone} 已经在线`);
+    // }
 
     // 随机头像
     let avatar = RANDOM_AVATAR[Math.floor((Math.random() * RANDOM_AVATAR.length))];
@@ -178,7 +178,7 @@ async function list(status) {
  */
 function getNameFirstLetter(name) {
     let result = pinyin(name[0]);
-    return result[0][0][0];
+    return result[0][0][0].toLowerCase();
 }
 
 module.exports = {
