@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 应用名
-APP_NAME="cloverx"
+APP_NAME="im-server"
 
 # linux or darwin
 SYSTEM=$(echo $(uname) | awk '{print tolower($0)}');
