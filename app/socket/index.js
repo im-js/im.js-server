@@ -19,6 +19,10 @@ io.on('connection', function (socket) {
     socket.on('peerMessage', function (data) {
         sendPeerMessage(socket, data);
     });
+
+    socket.on('disconnect', function () {
+        modelUser.changeUserOnlineStatus(socket.id, 'offline');
+    });
 });
 
 // 私聊消息

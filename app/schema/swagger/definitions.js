@@ -54,6 +54,10 @@ module.exports = {
             status: {
                 type: 'string',
                 description: '在线状态'
+            },
+            vibration: {
+                type: 'boolean',
+                description: '是否开启震动'
             }
         }
     }

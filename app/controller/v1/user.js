@@ -68,7 +68,7 @@ router.push({
         field: V.string().required()
     },
     body: {
-        value: V.string().required()
+        value: V.any().required()
     },
     processors: [
         async (ctx, next) => {

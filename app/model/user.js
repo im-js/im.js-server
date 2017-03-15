@@ -78,10 +78,28 @@ async function login (name, phone, socketId = '') {
 }
 
 /**
+ * 用户在线状态切换
+ */
+async function changeUserOnlineStatus(socketId, status) {
+    let user = await schemaUser
+        .findOne({
+            where: {
+                socketId: socketId
+            }
+        });
+
+    if (user) {
+        return await user.update({
+            status: status
+        });
+    }
+}
+
+/**
  * 修改用户属性
  */
 async function modifyUserInfo (userId, field, value) {
-    if (!~['name', 'socketId'].indexOf(field)) {
+    if (!~['name', 'socketId', 'vibration'].indexOf(field)) {
         throw cloverx.Error.badParameter(`字段 ${field} 不可更改`);
     }
 
@@ -100,6 +118,11 @@ async function modifyUserInfo (userId, field, value) {
         return await user.update({
             [field]: value,
             firstLetter: getNameFirstLetter(value)
+        });
+    } else if(field === 'socketId') {
+        return await user.update({
+            [field]: value,
+            status: 'online'
         });
     } else {
         return await user.update({
@@ -151,7 +174,7 @@ async function list(status) {
     }
 
     let result = await schemaUser.findAll({
-        attributes: ['userId', 'avatar', 'name', 'phone', 'socketId', 'status', 'firstLetter'],
+        attributes: ['userId', 'avatar', 'name', 'phone', 'socketId', 'status', 'firstLetter', 'vibration'],
         where,
         order: [
             ['firstLetter', 'asc'],
@@ -162,7 +185,10 @@ async function list(status) {
 
     let sectionSort = {};
     for(let i = 0; i< result.length; i++) {
-        let {firstLetter } = result[i];
+        let { firstLetter, vibration } = result[i];
+        // 震动模式
+        result[i].vibration = !!vibration;
+        // 首字母
         if( !sectionSort[firstLetter] ) {
             sectionSort[firstLetter] = [result[i]];
         } else {
@@ -186,5 +212,6 @@ module.exports = {
     logout,
     getByUserId,
     list,
-    modifyUserInfo
+    modifyUserInfo,
+    changeUserOnlineStatus
 };

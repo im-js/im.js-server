@@ -154,6 +154,9 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/osx,vim,node,webstorm,visualstudiocode
 
+### Deploy ###
+/app/deploy/.node/
+/app/deploy/.pm2/
 
 
 ### cloverx-cli ###

@@ -48,10 +48,16 @@ module.exports = {
             comment: '当前 socketId'
         },
         status: {
-            type: S.ENUM('online', 'offline'),
+            type: S.ENUM('online', 'offline', 'delete'),
             allowNull: false,
             defaultValue: 'offline',
             comment: '用户在线状态'
+        },
+        vibration: {
+            type: S.BOOLEAN,
+            allowNull: false,
+            defaultValue: true,
+            comment: '是否开启震动'
         }
     },
     comment: '用户表'
