@@ -13,12 +13,12 @@ module.exports = {
     doc: {
         swaggerDocHost: 'http://cheniu-dev.souche.com:8081/?url=',
         pathHash: '6def414e82cdd4bbeeb8e56b7543fe35',
-        host: '127.0.0.1:7078'
+        host: 'im-server.plusman.cn'
     },
     mysql: {
         'im': {
             database: 'im',
-            user: 'root',
+            user: 'im_rw',
             password: null,
             host: '127.0.0.1',
             pool: {
