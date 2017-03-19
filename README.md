@@ -1,5 +1,5 @@
-# im-server
->[im-client](https://github.com/plusmancn/im-client) 服务端代码
+# im.js.server
+>[im.js](https://github.com/plusmancn/im.js) 服务端代码
 
 ## Usage
 ```shell
@@ -40,6 +40,8 @@ npm run dev
 当用户上线时候，客户端向服务器发送 `user:online` 事件，服务器以数组的形式返回对应用户的离线消息。
 
 ## 用户状态裁决
-在线
+AppState 状态与 socket 状态
 
-离线
+State      | background | inactive | active
+:----------|:-----------|:---------|:-------
+socket-ios | disconnect | connect  | connect
