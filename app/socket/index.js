@@ -10,29 +10,21 @@
 
 // 启动 socket.io
 const cloverx = require('cloverx');
-const uuid = require('uuid');
 const io = require('socket.io')(cloverx.server);
 
 const modelUser = cloverx.model.get('user');
+const modelMessage = cloverx.model.get('message');
 
 io.on('connection', function (socket) {
-    socket.on('peerMessage', function (data) {
-        sendPeerMessage(socket, data);
+    socket.on('peerMessage', function (payloads) {
+        modelMessage.sendPeerMessage(socket, payloads);
     });
 
     socket.on('disconnect', function () {
         modelUser.changeUserOnlineStatus(socket.id, 'offline');
     });
-});
 
-// 私聊消息
-async function sendPeerMessage(socket, data) {
-    let user = await modelUser.getByUserId(data.to);
-    if (user.socketId) {
-        data.uuid = data.uuid || uuid.v4();
-        data.ext.timestamp = +(new Date());
-        socket
-            .to(user.socketId)
-            .emit('message', data);
-    }
-}
+    socket.on('user:online', function (data) {
+        modelMessage.sendOfflineMessage(socket, data.userId);
+    });
+});
