@@ -16,7 +16,7 @@ const modelUser = cloverx.model.get('user');
 const modelMessage = cloverx.model.get('message');
 
 io.on('connection', function (socket) {
-    socket.on('peerMessage', function (payloads) {
+    socket.on('message', function (payloads) {
         modelMessage.sendPeerMessage(socket, payloads);
     });
 
