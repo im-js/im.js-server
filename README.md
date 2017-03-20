@@ -16,3 +16,6 @@ npm install
 ```shell
 npm run dev
 ```
+
+## Nginx 配置参考
+[x-config/nginx](https://github.com/plusmancn/x-config/tree/master/nginx)
