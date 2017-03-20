@@ -8,7 +8,7 @@
 * Mysql >= 5.6.5
 
 ## Usage
-先前往 `config` 目录，配置基本信息，然后  
+先前往 `config` 目录，配置基本信息，然后  
 ```shell
 npm install
 ```
