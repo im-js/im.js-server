@@ -1,5 +1,5 @@
 # im.js.server
->[im.js](https://github.com/plusmancn/im.js) 服务端代码，基于 [cloverx](https://github.com/clover-x/cloverx) 开发。
+>[im.js](https://github.com/im-js/im.js) 服务端代码，基于 [cloverx](https://github.com/clover-x/cloverx) 开发。
 
 
 ## Requirements

@@ -1,4 +1,4 @@
 version: 1.0.0
-title: 聊天服务端
+title: im.js-server
 description: |
-  基于 RN 以及 socket.io 实现
+  基于 socket.io + cloverx 实现
